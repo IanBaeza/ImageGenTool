@@ -1,19 +1,54 @@
 <!DOCTYPE html>
 
 <html leng="en">
-    <head>
-        <title>ImageGenTool</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" 
+        content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" 
-            href="/src/css/appStyle.css">
+    <title>ImageGenTool</title>
 
-    </head>
+    <link rel="stylesheet" 
+        href="/src/css/appStyle.css">
 
-    <body>
-        <div>
+    <!-- GoogleFont -->
+    <link rel="stylesheet" 
+        href="https://fonts.googleapis.com/css2?family=Voces&display=swap" >
+
+</head>
+
+<body>
+    <section class="generador-imagenes">
+        <div class="content">
+            <h1>ImageGenTool</h1>
+
+            <p>ImageGenTool es una aplicación para probar la 
+                API de generación de imágenes de OpenIA.</p>
+
+            <form action="#" class="formulario">
+                <input type="text" 
+                    class="input-formulario"
+                    placeholder="Describe la imágen que quieres">
+
+                <div class="selector">
+                    <select class="select-cantidad-img">
+                        <option value="1">1 Imagen</option>
+                        <option value="2">2 Imagen</option>
+                        <option value="3">3 Imagen</option>
+                        <option value="4">4 Imagen</option>
+                        <option value="5">5 Imagen</option>
+                        <option value="6">6 Imagen</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-generar">
+                    Generar
+                </button>
+            </form>
 
         </div>
-        
-        <script src="/src/js/appScript.js"></script>
-    </body>
+    </section>
+
+    <script src="/src/js/appScript.js"></script>
+</body>
 </html>
