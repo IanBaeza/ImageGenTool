@@ -1,5 +1,4 @@
 const apiURL = "https://api.openai.com/v1/images/generations";
-const OPENAI_API_KEY = "";
 
 const formulario = document.querySelector(".formulario");
 const galeriaImagenes = document.querySelector(".galeria-imagenes");
@@ -29,7 +28,7 @@ const generarImagenes = async (inputTextUsuario, cantidadImgUsuario) => {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json",
-                "Authorization" : `Bearer ${OPENAI_API_KEY}`
+                "Authorization" : `Bearer ${process.env.DALLE_API_KEY}`
             },
             body : JSON.stringify({
                 prompt : inputTextUsuario,
