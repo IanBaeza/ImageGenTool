@@ -1,27 +1,35 @@
 import DALLE_API_KEY from "./apiKEY.js";
 
-const apiURL = "https://api.openai.com/v1/images/generations";
-
 const formulario = document.querySelector(".formulario");
 const galeriaImagenes = document.querySelector(".galeria-imagenes");
-
+const apiURL = "https://api.openai.com/v1/images/generations";
 let estaGenerandoImagen = false;
 
-const actualizarImagen = (arrayImagenes) => {
-    arrayImagenes.forEach((objImagen, indice) => {
-        const imagen = galeriaImagenes.querySelectorAll(".imagen")[indice];
-        const imagenElement = imagen.querySelector("img");
-        const btnDescargar = imagen.querySelector(".btn-descargar");
+formulario.addEventListener("submit", handleFormSubmission);
 
-        const iaGeneratedImg = `data:image/jpeg;base64,${objImagen.b64_json}`;
-        imagenElement.src = iaGeneratedImg;
+const handleFormSubmission = (e) => {
+    e.preventDefault();
 
-        imagenElement.onload = () => {
-            imagen.classList.remove("cargando");
-            btnDescargar.setAttribute("href", iaGeneratedImg);
-            btnDescargar.setAttribute("download", `${new Date().getTime()}.jpg`);
-        }
-    });
+    if(estaGenerandoImagen) return;
+    estaGenerandoImagen = true;
+
+    const inputTextUsuario = e.srcElement[0].value;
+    const cantidadImgUsuario = e.srcElement[1].value;
+
+    const imagen = Array.from( {length : cantidadImgUsuario} , () => `
+        <div class="imagen cargando">
+            <img src="/src/assets/images/loader.svg" 
+                alt="imagen">
+
+            <a href="#" class="btn-descargar">
+                <img src="/src/assets/images/icono-descargar.png" 
+                    alt="icono-descargar">
+            </a>
+        </div>`
+    ).join("");
+
+    galeriaImagenes.innerHTML = imagen;
+    generarImagenes(inputTextUsuario, cantidadImgUsuario);
 }
 
 const generarImagenes = async (inputTextUsuario, cantidadImgUsuario) => {
@@ -55,31 +63,19 @@ const generarImagenes = async (inputTextUsuario, cantidadImgUsuario) => {
     }
 }
 
-const handleFormSubmission = (e) => {
-    e.preventDefault();
+const actualizarImagen = (arrayImagenes) => {
+    arrayImagenes.forEach((objImagen, indice) => {
+        const imagen = galeriaImagenes.querySelectorAll(".imagen")[indice];
+        const imagenElement = imagen.querySelector("img");
+        const btnDescargar = imagen.querySelector(".btn-descargar");
 
-    if(estaGenerandoImagen) return;
-    estaGenerandoImagen = true;
+        const iaGeneratedImg = `data:image/jpeg;base64,${objImagen.b64_json}`;
+        imagenElement.src = iaGeneratedImg;
 
-    const inputTextUsuario = e.srcElement[0].value;
-    const cantidadImgUsuario = e.srcElement[1].value;
-
-    const imagen = Array.from(
-        {length : cantidadImgUsuario}, () => `
-        <div class="imagen cargando">
-            <img src="/src/assets/images/loader.svg" 
-                alt="imagen">
-
-            <a href="#" class="btn-descargar">
-                <img src="/src/assets/images/icono-descargar.png" 
-                    alt="icono-descargar">
-            </a>
-        </div>`
-    ).join("");
-
-    galeriaImagenes.innerHTML = imagen;
-    generarImagenes(inputTextUsuario, cantidadImgUsuario);
+        imagenElement.onload = () => {
+            imagen.classList.remove("cargando");
+            btnDescargar.setAttribute("href", iaGeneratedImg);
+            btnDescargar.setAttribute("download", `${new Date().getTime()}.jpg`);
+        }
+    });
 }
-
-formulario.addEventListener("submit", handleFormSubmission);
-
