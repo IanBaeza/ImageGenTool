@@ -1,3 +1,5 @@
+import DALLE_API_KEY from "./apiKEY.js";
+
 const apiURL = "https://api.openai.com/v1/images/generations";
 
 const formulario = document.querySelector(".formulario");
@@ -28,7 +30,7 @@ const generarImagenes = async (inputTextUsuario, cantidadImgUsuario) => {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json",
-                "Authorization" : `Bearer ${process.env.DALLE_API_KEY}`
+                "Authorization" : `Bearer ${DALLE_API_KEY}`
             },
             body : JSON.stringify({
                 prompt : inputTextUsuario,
